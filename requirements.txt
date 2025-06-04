@@ -1,5 +1,7 @@
+Flask
 requests
 matplotlib
 numpy
 pandas
 google-generativeai
+gunicorn

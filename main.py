@@ -12,6 +12,9 @@ import io
 import base64
 import uuid # For unique request IDs
 
+from flask import Flask # Added for web server
+from threading import Thread # Added for running bot in background
+
 # For chart generation
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -1251,14 +1254,33 @@ I'll find it for you! 🔍📊📈
             except KeyboardInterrupt: print("\n🛑 Bot stopped by user"); break
             except Exception as e: print(f"Error in main loop: {e}"); time.sleep(5)
 
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Bybit Crypto Bot is running!"
+
+def run_bot(bot_instance):
+    bot_instance.run()
+
 def main():
     TELEGRAM_BOT_TOKEN = "7744877022:AAF7m1W1b624A4TQTcycIK_rBmCh3QCS54Y"
     BYBIT_API_KEY = "hx9lJtinzXDJj1qPiF"
     BYBIT_API_SECRET = "gzb8alS0uKmf0hEF8cwkinw87vY0iNosmnPA"
     if not TELEGRAM_BOT_TOKEN or TELEGRAM_BOT_TOKEN == "YOUR_TELEGRAM_BOT_TOKEN_HERE":
         print("❌ Error: Please set your Telegram Bot Token!"); return
+    
     bot = BybitCryptoBotEnhanced(TELEGRAM_BOT_TOKEN, BYBIT_API_KEY, BYBIT_API_SECRET)
-    bot.run()
+    
+    # Start the bot in a separate thread
+    bot_thread = Thread(target=run_bot, args=(bot,))
+    bot_thread.daemon = True # Allows main program to exit even if threads are still running
+    bot_thread.start()
+    
+    print("🚀 Starting Flask web server for DigitalOcean App Platform...")
+    # Get port from environment variable or default to 8080
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)
 
 if __name__ == "__main__":
     main()
