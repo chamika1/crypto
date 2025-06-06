@@ -12,9 +12,6 @@ import io
 import base64
 import uuid # For unique request IDs
 
-from flask import Flask # Added for web server
-from threading import Thread # Added for running bot in background
-
 # For chart generation
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -1254,68 +1251,14 @@ I'll find it for you! 🔍📊📈
             except KeyboardInterrupt: print("\n🛑 Bot stopped by user"); break
             except Exception as e: print(f"Error in main loop: {e}"); time.sleep(5)
 
-app = Flask(__name__) # Flask app instance
-
-# --- Bot Initialization and Start ---
-# IMPORTANT: For production, these should be set via environment variables, not hardcoded.
-TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "7744877022:AAF7m1W1b624A4TQTcycIK_rBmCh3QCS54Y")
-BYBIT_API_KEY = os.environ.get("BYBIT_API_KEY", "hx9lJtinzXDJj1qPiF")
-BYBIT_API_SECRET = os.environ.get("BYBIT_API_SECRET", "gzb8alS0uKmf0hEF8cwkinw87vY0iNosmnPA")
-
-bot_instance = None # Will hold the bot object
-
-if not TELEGRAM_BOT_TOKEN or TELEGRAM_BOT_TOKEN == "YOUR_TELEGRAM_BOT_TOKEN_HERE" or \
-   not BYBIT_API_KEY or not BYBIT_API_SECRET:
-    print("❌ Error: Critical API credentials (Telegram Token, Bybit Key/Secret) are missing or placeholders.")
-    print("❌ Please set them as environment variables in your deployment environment.")
-    print("❌ Bot will not be fully functional.")
-else:
-    try:
-        print("ℹ️ Initializing BybitCryptoBotEnhanced...")
-        bot_instance = BybitCryptoBotEnhanced(TELEGRAM_BOT_TOKEN, BYBIT_API_KEY, BYBIT_API_SECRET)
-        
-        def run_bot_task(bot):
-            print("🤖 Starting Bybit Crypto Bot polling loop in a background thread...")
-            try:
-                bot.run()
-            except Exception as e:
-                print(f"💥 Unhandled exception in bot's run loop: {e}")
-                # Optionally, implement more robust error handling or restart logic here
-
-        bot_thread = Thread(target=run_bot_task, args=(bot_instance,))
-        bot_thread.daemon = True # Ensure thread doesn't block app exit
-        bot_thread.start()
-        print("✅ Bot thread has been started.")
-    except Exception as e:
-        print(f"❌❌❌ CRITICAL ERROR during bot initialization or thread start: {e}")
-        bot_instance = None # Ensure bot_instance is None if setup failed
-
-# --- End Bot Initialization and Start ---
-
-@app.route('/')
-def home():
-    if bot_instance and bot_instance.cache_updated: # Check if bot seems operational
-        return "Bybit Crypto Bot is running and symbols cached!"
-    elif bot_instance:
-        return "Bybit Crypto Bot is initializing..."
-    else:
-        return "Web server is running, but Bot initialization failed (check logs and API keys)."
-
-# This main function is now only for running the Flask development server directly
-# Gunicorn will not use this; it directly uses the 'app' instance.
-def main_dev_server():
-    print("🚀 Starting Flask development web server (for local testing only)...")
-    # PORT environment variable is standard for PaaS like DigitalOcean App Platform
-    # Gunicorn will use this PORT, Flask dev server also respects it if set.
-    port = int(os.environ.get("PORT", 8080))
-    # Important: use_reloader=False is good practice when threads are started globally,
-    # as the reloader can cause threads to start multiple times or behave unexpectedly.
-    # For Gunicorn deployment, this app.run() is not used.
-    app.run(host='0.0.0.0', port=port, debug=False, use_reloader=False)
+def main():
+    TELEGRAM_BOT_TOKEN = "7712443597:AAGq9d3pbBbMUe4anRpKstv6Z8_r7cLPmCw"
+    BYBIT_API_KEY = "hx9lJtinzXDJj1qPiF"
+    BYBIT_API_SECRET = "gzb8alS0uKmf0hEF8cwkinw87vY0iNosmnPA"
+    if not TELEGRAM_BOT_TOKEN or TELEGRAM_BOT_TOKEN == "YOUR_TELEGRAM_BOT_TOKEN_HERE":
+        print("❌ Error: Please set your Telegram Bot Token!"); return
+    bot = BybitCryptoBotEnhanced(TELEGRAM_BOT_TOKEN, BYBIT_API_KEY, BYBIT_API_SECRET)
+    bot.run()
 
 if __name__ == "__main__":
-    print("ℹ️ Running in __main__ context (direct execution of main.py)")
-    if not bot_instance:
-        print("⚠️ Bot instance is not available (initialization failed). Flask dev server will start, but bot features may be broken.")
-    # Even if bot_instance is None, we start the dev server to check the web part.
-    main_dev_server()
+    main()
