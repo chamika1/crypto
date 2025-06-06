@@ -27,7 +27,7 @@ import urllib.parse
 import google.generativeai as genai
 
 # Gemini API Key (Ideally, use environment variables or a secrets manager)
-GEMINI_API_KEY = "AIzaSyBt2dOiqJkMCwbqpzRwb1pFKuePUAEl9Fk"
+GEMINI_API_KEY = "GEMINI_API_KEY"
 if GEMINI_API_KEY and GEMINI_API_KEY != "YOUR_GEMINI_API_KEY_HERE": # Basic check
     try:
         genai.configure(api_key=GEMINI_API_KEY)
@@ -1252,9 +1252,9 @@ I'll find it for you! 🔍📊📈
             except Exception as e: print(f"Error in main loop: {e}"); time.sleep(5)
 
 def main():
-    TELEGRAM_BOT_TOKEN = "7712443597:AAGq9d3pbBbMUe4anRpKstv6Z8_r7cLPmCw"
-    BYBIT_API_KEY = "hx9lJtinzXDJj1qPiF"
-    BYBIT_API_SECRET = "gzb8alS0uKmf0hEF8cwkinw87vY0iNosmnPA"
+    TELEGRAM_BOT_TOKEN = "replace TELEGRAM_BOT_TOKEN"
+    BYBIT_API_KEY = "replace BYBIT_API_KEY"
+    BYBIT_API_SECRET = "replace BYBIT_API_SECRET"
     if not TELEGRAM_BOT_TOKEN or TELEGRAM_BOT_TOKEN == "YOUR_TELEGRAM_BOT_TOKEN_HERE":
         print("❌ Error: Please set your Telegram Bot Token!"); return
     bot = BybitCryptoBotEnhanced(TELEGRAM_BOT_TOKEN, BYBIT_API_KEY, BYBIT_API_SECRET)
