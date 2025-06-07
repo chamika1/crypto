@@ -4,8 +4,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) <!-- Replace with your actual license -->
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) <!-- Or your preferred formatter -->
 [![Telegram](https://img.shields.io/badge/Telegram-Bot-blue.svg?logo=telegram)](https://t.me/your_bot_username_here) <!-- Replace with your bot link -->
-[![GitHub stars](https://img.shields.io/github/stars/YOUR_USERNAME/YOUR_REPO_NAME.svg?style=social&label=Star&maxAge=2592000)](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME/stargazers/) <!-- Replace with your repo -->
-[![GitHub forks](https://img.shields.io/github/forks/YOUR_USERNAME/YOUR_REPO_NAME.svg?style=social&label=Fork&maxAge=2592000)](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME/network/members) <!-- Replace with your repo -->
+[![GitHub stars](https://img.shields.io/github/stars/chamika1/crypto.svg?style=social&label=Star&maxAge=2592000)](https://github.com/chamika1/crypto/stargazers/) <!-- Replace with your repo -->
+[![GitHub forks](https://img.shields.io/github/forks/chamika1/crypto.svg?style=social&label=Fork&maxAge=2592000)](https://github.com/chamika1/crypto/network/members) <!-- Replace with your repo -->
 
 **Your AI-Powered Telegram Companion for Navigating the Crypto Markets!**
 
